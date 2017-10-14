@@ -2,15 +2,27 @@
   "name": "now-playing-yle-preact",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "@just-boris/preact-scripts": "1.0.14",
+    "node-sass-chokidar": "^0.0.3"
+  },
+  "dependencies": {
+    "@material/button": "^0.7.0",
+    "@material/card": "^0.2.9",
+    "@material/list": "^0.2.19",
+    "@material/tabs": "^0.3.1",
+    "@material/toolbar": "^0.4.11",
+    "@material/typography": "^0.3.0",
     "preact": "^8.2.5",
-    "preact-compat": "^3.17.0"
+    "preact-compat": "^3.17.0",
+    "preact-material-components": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
   }
 }

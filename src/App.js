@@ -1,19 +1,22 @@
-import { h, Component } from 'preact';
-import logo from './logo.svg';
-import './App.css';
+import {h, Component} from 'preact';
+import Toolbar from 'preact-material-components/Toolbar';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Toolbar>
+        <Toolbar.Row>
+          <Toolbar.Section align-start={true}>
+            <Toolbar.Icon menu={true}>menu</Toolbar.Icon>
+            <Toolbar.Title>
+              My App
+            </Toolbar.Title>
+          </Toolbar.Section>
+          <Toolbar.Section align-end={true}>
+            <Toolbar.Icon>more_vert</Toolbar.Icon>
+          </Toolbar.Section>
+        </Toolbar.Row>
+      </Toolbar>
     );
   }
 }
