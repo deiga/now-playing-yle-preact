@@ -1,47 +1,45 @@
-import {h, Component} from 'preact';
+import { h } from 'preact';
 import Tabs from 'preact-material-components/Tabs';
 import Toolbar from 'preact-material-components/Toolbar';
 
-class AppToolbar extends Component {
+/**
+ * Helper function to handle the cases when we don't have any channels to show
+ */
+function renderTabs(channels) {
+  if (channels.length <= 0) {
+    return null;
+  }
 
-  /**
-   * Helper function to handle the cases when we don't have any channels to show
-   */
-  renderTabs() {
-    if (this.props.channels.length <= 0) {
-      return null;
+  return (
+    <Tabs indicator-accent={true}>
+    {
+      channels.map(c => (
+        <Tabs.Tab>{ c.title }</Tabs.Tab>
+      ))
     }
-
-    return (
-      <Tabs indicator-accent={true}>
-      {
-        this.props.channels.map(c => (
-          <Tabs.Tab>{ c.title }</Tabs.Tab>
-        ))
-      }
-      </Tabs>
-    );
-  }
-
-  render() {
-    return (
-      <Toolbar>
-        <Toolbar.Row>
-          <Toolbar.Section align-start={true}>
-            <Toolbar.Icon menu={true}>menu</Toolbar.Icon>
-            <Toolbar.Title>
-              { this.props.title }
-            </Toolbar.Title>
-          </Toolbar.Section>
-        </Toolbar.Row>
-        <Toolbar.Row>
-          <Toolbar.Section align-end={true}>
-            { this.renderTabs() }
-          </Toolbar.Section>
-        </Toolbar.Row>
-      </Toolbar>
-    );
-  }
+    </Tabs>
+  );
 }
 
-export default AppToolbar;
+export default ({ currentProgram, channels }) => {
+  console.log(`AppToolbar.render(): channels=${JSON.stringify(channels)}`);
+  const title = currentProgram ? currentProgram.title : 'Now Playing';
+
+  return (
+    <Toolbar>
+      <Toolbar.Row>
+        <Toolbar.Section align-start={true}>
+          <Toolbar.Icon menu={true}>menu</Toolbar.Icon>
+          <Toolbar.Title>
+            { title }
+          </Toolbar.Title>
+        </Toolbar.Section>
+      </Toolbar.Row>
+      <Toolbar.Row>
+        <Toolbar.Section align-end={true}>
+          { renderTabs(channels) }
+        </Toolbar.Section>
+      </Toolbar.Row>
+    </Toolbar>
+  );
+}

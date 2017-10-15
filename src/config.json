@@ -1,0 +1,9 @@
+{
+  "baseUrl": "https://external.api.yle.fi/v1",
+  "appId": "54b5d6e4",
+  "appKey": "ff17c6cba04a447ef2a7581f807888b6",
+  "secret": "dc3462ba4c450cc6",
+  "notifications": {
+    "publicKey": "BLpYAwYXQmfFjGxP2bHmkOwuXh3kPqvXB2TK0gYxJU6YqZMuKZLhOAcLKWW-p7rUAyyrMaSV9UEAAyefrXpU81Q"
+  }
+}
