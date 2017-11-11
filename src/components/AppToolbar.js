@@ -5,15 +5,14 @@ import Toolbar from 'preact-material-components/Toolbar';
 /**
  * Helper function to handle the cases when we don't have any channels to show
  */
-function renderTabs(channels) {
+function renderTabs(channels, onTabClick) {
   if (channels.length <= 0) {
     return null;
   }
-
-  return <Tabs indicator-accent={true}>{channels.map(c => <Tabs.Tab>{c.title.fi}</Tabs.Tab>)}</Tabs>;
+  return <Tabs indicator-accent={true}>{channels.map(c => <Tabs.Tab onClick={onTabClick} data-channel-id={c.id}>{c.title.fi}</Tabs.Tab>)}</Tabs>;
 }
 
-export default ({ currentProgram, channels }) => {
+export default ({ currentProgram, channels, onTabClick }) => {
   console.log(`AppToolbar.render(): channels`, channels);
   const title = currentProgram ? currentProgram.title : 'Now Playing';
 
@@ -26,7 +25,7 @@ export default ({ currentProgram, channels }) => {
         </Toolbar.Section>
       </Toolbar.Row>
       <Toolbar.Row>
-        <Toolbar.Section align-end={true}>{renderTabs(channels)}</Toolbar.Section>
+        <Toolbar.Section align-end={true}>{renderTabs(channels, onTabClick)}</Toolbar.Section>
       </Toolbar.Row>
     </Toolbar>
   );

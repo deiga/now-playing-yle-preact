@@ -46,10 +46,9 @@ export async function fetchCurrentPrograms(services = []) {
   const params = url.searchParams;
   params.set('app_id', appId);
   params.set('app_key', appKey);
-  // params.set('service', services.join(','));
-  // params.set('start', '-1');
-  // params.set('end', '10');
-  params.set('limit', '25');
+  params.set('service', services.join(','));
+  params.set('start', '-1');
+  params.set('end', '10');
 
   // Fix the jsonp callback function name for service worker compatibility
   const options = { jsonpCallbackFunction: 'jsonp_options' };

@@ -5,7 +5,7 @@ import AppToolbar from '../components/AppToolbar';
 const mapDispatchToProps = dispatch => {
   return {
     onTabClick: channelId => {
-      dispatch(showGuide(channelId));
+      dispatch(showGuide(channelId.target.attributes["data-channel-id"].value));
     }
   }
 }

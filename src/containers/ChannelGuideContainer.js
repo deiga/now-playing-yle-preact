@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    programs: state.programs.items,
+    programs: state.programs.channelItems,
   };
 }
 
