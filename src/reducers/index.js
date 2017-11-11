@@ -3,8 +3,12 @@ import {
   REQUEST_CHANNELS,
   RECEIVE_CHANNELS,
   REQUEST_PROGRAMS,
-  RECEIVE_PROGRAMS
+  RECEIVE_PROGRAMS,
+  fetchServices,
+  receiveChannels,
 } from '../actions';
+
+import store from './../store';
 
 function programs(state = { isFetching: false, items: [] }, action) {
   switch (action.type) {
@@ -25,6 +29,9 @@ function programs(state = { isFetching: false, items: [] }, action) {
 function channels(state = { isFetching: false, items: [] }, action) {
   switch (action.type) {
     case REQUEST_CHANNELS:
+      fetchServices().then(result => {
+        store.dispatch(receiveChannels(result));
+      });
       return Object.assign({}, state, {
         isFetching: true,
       });

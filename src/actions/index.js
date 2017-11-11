@@ -23,8 +23,8 @@ export function requestChannels() {
   return { type: REQUEST_CHANNELS };
 }
 
-export function receiveChannels() {
-  return { type: RECEIVE_CHANNELS };
+export function receiveChannels(channels) {
+  return { type: RECEIVE_CHANNELS, channels };
 }
 
 export function playClip(programId, mediaId) {
@@ -51,7 +51,7 @@ async function fetchCurrentPrograms(services = []) {
   params.set('end', '10');
 
   // Fix the jsonp callback function name for service worker compatibility
-  const options = {jsonpCallbackFunction: 'jsonp_options'};
+  const options = { jsonpCallbackFunction: 'jsonp_options' };
 
   const response = await fetchp(url.href, options);
   // TODO Validate response
@@ -65,7 +65,7 @@ async function fetchCurrentPrograms(services = []) {
  * @param {String} [type='TVChannel'] - the type of services to fetch
  * @return {Array<Object>} YLE service metadata in unparsed form
  */
-async function fetchServices(type = 'TVChannel') {
+export async function fetchServices(type = 'TVChannel') {
   const url = new URL(`${baseUrl}/programs/services.json`);
   const params = url.searchParams;
   params.set('app_id', appId);
@@ -73,7 +73,7 @@ async function fetchServices(type = 'TVChannel') {
   params.set('type', type);
 
   // Fix the jsonp callback function name for service worker compatibility
-  const options = {jsonpCallbackFunction: 'jsonp_services'};
+  const options = { jsonpCallbackFunction: 'jsonp_services' };
 
   let response;
   try {
@@ -92,7 +92,7 @@ async function fetchServices(type = 'TVChannel') {
  * @param {String} mediaId - the id of the media
  * @return {Object} The streaming metadata, including URL etc.
  */
-async function fetchStream(programId, mediaId) {
+export async function fetchStream(programId, mediaId) {
   const url = new URL(`${baseUrl}/media/playouts.json`);
   const params = url.searchParams;
   params.set('app_id', appId);
@@ -102,7 +102,7 @@ async function fetchStream(programId, mediaId) {
   params.set('protocol', 'HLS');
 
   // Fix the jsonp callback function name for service worker compatibility
-  const options = {jsonpCallbackFunction: 'jsonp_stream'};
+  const options = { jsonpCallbackFunction: 'jsonp_stream' };
 
   const response = await fetchp(url.href, options);
   // TODO Validate response
