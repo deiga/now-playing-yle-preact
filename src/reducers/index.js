@@ -6,6 +6,8 @@ import {
   RECEIVE_PROGRAMS,
   fetchServices,
   receiveChannels,
+  fetchCurrentPrograms,
+  receivePrograms
 } from '../actions';
 
 import store from './../store';
@@ -13,6 +15,9 @@ import store from './../store';
 function programs(state = { isFetching: false, items: [] }, action) {
   switch (action.type) {
     case REQUEST_PROGRAMS:
+      fetchCurrentPrograms().then(result => {
+        store.dispatch(receivePrograms(result));
+      });
       return Object.assign({}, state, {
         isFetching: true,
       });

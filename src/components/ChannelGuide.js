@@ -2,7 +2,7 @@ import { h } from 'preact';
 import Card from 'preact-material-components/Card';
 
 export default ({ programs }) => {
-  console.log(`ChannelGuide.render(): programs=${JSON.stringify(programs)}`);
+  console.log(`ChannelGuide.render(): programs=`, programs);
 
   return (
     <div>
@@ -11,14 +11,14 @@ export default ({ programs }) => {
         <Card>
           <Card.Primary>
             <Card.Subtitle>
-              { `${ p.startTime.getHours() }:${ String(p.startTime.getMinutes()).padStart(2, '0') }` }
+              { `${ new Date(p.startTime).getHours() }:${ String(new Date(p.startTime).getMinutes()).padStart(2, '0') }` }
             </Card.Subtitle>
             <Card.Title large>
-              { p.title }
+              { p.content.title.fi }
             </Card.Title>
           </Card.Primary>
           <Card.SupportingText>
-            { p.description }
+            { p.content.description.fi }
           </Card.SupportingText>
           <Card.Actions>
             <Card.Action>Katso</Card.Action>

@@ -3,7 +3,7 @@ import { baseUrl, appId, appKey, secret } from '../config.json';
 
 // Action types
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS';
-export const RECEIVE_PROGRAMS = 'REQUEST_PROGRAMS';
+export const RECEIVE_PROGRAMS = 'RECEIVE_PROGRAMS';
 export const REQUEST_CHANNELS = 'REQUEST_CHANNELS';
 export const REQUEST_PROGRAMS = 'REQUEST_PROGRAMS';
 
@@ -15,8 +15,8 @@ export function requestPrograms() {
   return { type: REQUEST_PROGRAMS };
 }
 
-export function receivePrograms() {
-  return { type: RECEIVE_PROGRAMS };
+export function receivePrograms(programs) {
+  return { type: RECEIVE_PROGRAMS, programs };
 }
 
 export function requestChannels() {
@@ -41,14 +41,15 @@ export function showGuide(channelId) {
  * @param {Array<String>} [services=[]] - a string array of YLE service IDs o use as filter
  * @return {Array<Object>} YLE program metadata in unparsed form
  */
-async function fetchCurrentPrograms(services = []) {
+export async function fetchCurrentPrograms(services = []) {
   const url = new URL(`${baseUrl}/programs/schedules/now.json`);
   const params = url.searchParams;
   params.set('app_id', appId);
   params.set('app_key', appKey);
-  params.set('service', services.join(','));
-  params.set('start', '-1');
-  params.set('end', '10');
+  // params.set('service', services.join(','));
+  // params.set('start', '-1');
+  // params.set('end', '10');
+  params.set('limit', '25');
 
   // Fix the jsonp callback function name for service worker compatibility
   const options = { jsonpCallbackFunction: 'jsonp_options' };
