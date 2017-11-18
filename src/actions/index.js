@@ -56,6 +56,7 @@ export async function fetchCurrentPrograms(services = []) {
   params.set('availability', 'ondemand');
   params.set('mediaobject', 'audio');
   params.set('limit', '50');
+  params.set('category', '-5-162,-5-164,-5-226,-5-228');
 
   // Fix the jsonp callback function name for service worker compatibility
   const options = { jsonpCallbackFunction: 'jsonp_options' };
@@ -116,4 +117,28 @@ export async function fetchStream(programId, mediaId) {
   // TODO Validate response
   const json = await response.json();
   return json.data[0];
+}
+
+/**
+ * Decryption function adopted from YLE API http://developer.yle.fi/static/decrypt-url.js
+ *
+ * @param {String} url - The encoded URL to decrypt
+ * @param {String} secret - The decoding secret
+ * @return {String} The decrypted URL
+ */
+export function decrypt(url, secret) {
+  const data = CryptoJS.enc.Base64.parse(url).toString(CryptoJS.enc.Hex);
+  const key = CryptoJS.enc.Utf8.parse(secret);
+  const iv = CryptoJS.enc.Hex.parse(data.substr(0, 32));
+  const message = CryptoJS.enc.Hex.parse(data.substr(32));
+
+  const options = {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  };
+
+  const params = CryptoJS.lib.CipherParams.create({ciphertext: message});
+  const decryptedMessage = CryptoJS.AES.decrypt(params, key, options);
+  return decryptedMessage.toString(CryptoJS.enc.Utf8);
 }
