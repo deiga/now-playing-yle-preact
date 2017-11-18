@@ -5,8 +5,8 @@ import ChannelGuide from '../components/ChannelGuide';
 const mapDispatchToProps = dispatch => {
   return {
     onWatchClick: (program, event) => {
-      const programId = program.content.id;
-      const mediaId = program.content.publicationEvent
+      const programId = program.id;
+      const mediaId = program.publicationEvent
         .map(p => {
           if (p.temporalStatus !== 'currently' || p.type !== 'OnDemandPublication') return null;
 
@@ -22,8 +22,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     programs: state.programs.channelItems,
+    streamUrl: state.programs.streamUrl,
   };
 };
 

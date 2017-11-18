@@ -6,7 +6,7 @@ export default ({ mediaUrl }) => {
   return (
     <div>
       <audio autoplay controls>
-        <source src={mediaUrl} type="application/x-mpegURL" />
+        <source src={mediaUrl} type="audio/mpeg" />
         Selaimesi ei tue videosoittoa.
       </audio>
     </div>

@@ -1,5 +1,6 @@
 import fetchp from 'fetch-jsonp';
 import { baseUrl, appId, appKey, secret } from '../config.json';
+import CryptoJS from 'crypto-js';
 
 // Action types
 export const RECEIVE_CHANNELS = 'RECEIVE_CHANNELS';
@@ -8,6 +9,7 @@ export const REQUEST_CHANNELS = 'REQUEST_CHANNELS';
 export const REQUEST_PROGRAMS = 'REQUEST_PROGRAMS';
 
 export const PLAY_CLIP = 'PLAY_CLIP';
+export const PLAY_CLIP2 = 'PLAY_CLIP2';
 export const SHOW_GUIDE = 'SHOW_GUIDE';
 
 // Action creators
@@ -29,6 +31,10 @@ export function receiveChannels(channels) {
 
 export function playClip(programId, mediaId) {
   return { type: PLAY_CLIP, programId, mediaId };
+}
+
+export function playClip2(stream) {
+  return { type: PLAY_CLIP2, streamUrl: decrypt(stream.url, secret) };
 }
 
 export function showGuide(channelId) {
@@ -108,7 +114,7 @@ export async function fetchStream(programId, mediaId) {
   params.set('app_key', appKey);
   params.set('program_id', programId);
   params.set('media_id', mediaId);
-  params.set('protocol', 'HLS');
+  params.set('protocol', 'PMD');
 
   // Fix the jsonp callback function name for service worker compatibility
   const options = { jsonpCallbackFunction: 'jsonp_stream' };
@@ -116,6 +122,7 @@ export async function fetchStream(programId, mediaId) {
   const response = await fetchp(url.href, options);
   // TODO Validate response
   const json = await response.json();
+  console.log(json.data[0]);
   return json.data[0];
 }
 
@@ -138,7 +145,7 @@ export function decrypt(url, secret) {
     padding: CryptoJS.pad.Pkcs7,
   };
 
-  const params = CryptoJS.lib.CipherParams.create({ciphertext: message});
+  const params = CryptoJS.lib.CipherParams.create({ ciphertext: message });
   const decryptedMessage = CryptoJS.AES.decrypt(params, key, options);
   return decryptedMessage.toString(CryptoJS.enc.Utf8);
 }
