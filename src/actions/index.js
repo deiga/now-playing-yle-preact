@@ -65,7 +65,8 @@ export async function fetchCurrentPrograms(services = []) {
  * @param {String} [type='TVChannel'] - the type of services to fetch
  * @return {Array<Object>} YLE service metadata in unparsed form
  */
-export async function fetchServices(type = 'TVChannel') {
+export async function fetchServices(type = 'radiochannel') {
+// export async function fetchServices(type = 'TVChannel') {
   const url = new URL(`${baseUrl}/programs/services.json`);
   const params = url.searchParams;
   params.set('app_id', appId);
