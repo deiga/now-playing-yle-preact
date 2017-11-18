@@ -36,7 +36,7 @@ function programs(state = { isFetching: false, items: [], channelItems: [], isPl
         isFetching: false,
         items: state.items,
         channelItems: state.items.filter(program => {
-          return program.service.id === action.channelId;
+          return program.publicationEvent[0].service.id === action.channelId;
         }),
       });
     case PLAY_CLIP:
