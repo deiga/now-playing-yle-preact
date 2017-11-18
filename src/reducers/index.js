@@ -42,15 +42,15 @@ function programs(state = { isFetching: false, items: [], channelItems: [] }, ac
         }),
       });
     case PLAY_CLIP:
-      console.log('play clip', action);
       fetchStream(action.programId, action.mediaId).then(result => {
         store.dispatch(playClip2(result));
       });
       return Object.assign({}, state, {
         isFetching: true,
+        playingProgram: action.programId,
+        streamUrl: null,
       });
     case PLAY_CLIP2:
-      console.log(action);
       return Object.assign({}, state, {
         isFetching: false,
         streamUrl: action.streamUrl,

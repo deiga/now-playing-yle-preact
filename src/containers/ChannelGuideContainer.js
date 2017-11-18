@@ -26,6 +26,7 @@ const mapStateToProps = state => {
   return {
     programs: state.programs.channelItems,
     streamUrl: state.programs.streamUrl,
+    playingProgram: state.programs.playingProgram
   };
 };
 

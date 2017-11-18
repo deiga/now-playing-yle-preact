@@ -122,7 +122,6 @@ export async function fetchStream(programId, mediaId) {
   const response = await fetchp(url.href, options);
   // TODO Validate response
   const json = await response.json();
-  console.log(json.data[0]);
   return json.data[0];
 }
 
