@@ -9,7 +9,13 @@ function renderTabs(channels, onTabClick) {
   if (channels.length <= 0) {
     return null;
   }
-  return <Tabs indicator-accent={true}>{channels.map(c => <Tabs.Tab onClick={onTabClick} data-channel-id={c.id}>{c.title.fi}</Tabs.Tab>)}</Tabs>;
+  return (
+    <Tabs.TabBarScroller>
+      <Tabs scroller={true} indicator-accent={true}>
+        {channels.map(c => <Tabs.Tab onClick={onTabClick} data-channel-id={c.id}>{c.title.fi}</Tabs.Tab>)}
+      </Tabs>;
+    </Tabs.TabBarScroller>
+  )
 }
 
 export default ({ currentProgram, channels, onTabClick }) => {
