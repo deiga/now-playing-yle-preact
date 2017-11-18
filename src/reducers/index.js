@@ -33,7 +33,9 @@ function programs(state = { isFetching: false, items: [], channelItems: [] }, ac
       return Object.assign({}, state, {
         isFetching: false,
         items: state.items,
-        channelItems: state.items.filter((program) => {return program.service.id === action.channelId })
+        channelItems: state.items.filter((program) => {
+          return program.publicationEvent[0].service.id === action.channelId
+        })
       });
     default:
       return state;

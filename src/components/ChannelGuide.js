@@ -7,24 +7,26 @@ export default ({ programs }) => {
   return (
     <div>
     {
-      programs.map(p => (
+      programs.map(p => {
+        let publicationEvent = p.publicationEvent.find((pe) => pe.temporalStatus === "currently")
+        return (
         <Card>
           <Card.Primary>
             <Card.Subtitle>
-              { `${ new Date(p.startTime).getHours() }:${ String(new Date(p.startTime).getMinutes()).padStart(2, '0') }` }
+              { `${ new Date(publicationEvent.startTime).getHours() }:${ String(new Date(publicationEvent.startTime).getMinutes()).padStart(2, '0') }` }
             </Card.Subtitle>
             <Card.Title large>
-              { p.content.title.fi }
+              { p.title.fi }
             </Card.Title>
           </Card.Primary>
           <Card.SupportingText>
-            { p.content.description.fi }
+            { p.description.fi }
           </Card.SupportingText>
           <Card.Actions>
             <Card.Action>Katso</Card.Action>
           </Card.Actions>
         </Card>
-      ))
+      )})
     }
     </div>
   );

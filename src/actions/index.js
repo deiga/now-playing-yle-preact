@@ -42,13 +42,20 @@ export function showGuide(channelId) {
  * @return {Array<Object>} YLE program metadata in unparsed form
  */
 export async function fetchCurrentPrograms(services = []) {
-  const url = new URL(`${baseUrl}/programs/schedules/now.json`);
+  // const url = new URL(`${baseUrl}/programs/schedules/now.json`);
+  // const params = url.searchParams;
+  // params.set('app_id', appId);
+  // params.set('app_key', appKey);
+  // params.set('service', services.join(','));
+  // params.set('start', '-10');
+  // params.set('end', '1');
+  const url = new URL(`${baseUrl}/programs/items.json`);
   const params = url.searchParams;
   params.set('app_id', appId);
   params.set('app_key', appKey);
-  params.set('service', services.join(','));
-  params.set('start', '-1');
-  params.set('end', '10');
+  params.set('availability', 'ondemand');
+  params.set('mediaobject', 'audio');
+  params.set('limit', '50');
 
   // Fix the jsonp callback function name for service worker compatibility
   const options = { jsonpCallbackFunction: 'jsonp_options' };
