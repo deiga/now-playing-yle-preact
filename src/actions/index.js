@@ -47,8 +47,8 @@ export async function fetchCurrentPrograms(services = []) {
   params.set('app_id', appId);
   params.set('app_key', appKey);
   params.set('service', services.join(','));
-  params.set('start', '-1');
-  params.set('end', '10');
+  params.set('start', '-10');
+  params.set('end', '1');
 
   // Fix the jsonp callback function name for service worker compatibility
   const options = { jsonpCallbackFunction: 'jsonp_options' };
@@ -66,7 +66,7 @@ export async function fetchCurrentPrograms(services = []) {
  * @return {Array<Object>} YLE service metadata in unparsed form
  */
 export async function fetchServices(type = 'radiochannel') {
-// export async function fetchServices(type = 'TVChannel') {
+  // export async function fetchServices(type = 'TVChannel') {
   const url = new URL(`${baseUrl}/programs/services.json`);
   const params = url.searchParams;
   params.set('app_id', appId);

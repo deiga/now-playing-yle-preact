@@ -5,16 +5,18 @@ import {
   REQUEST_PROGRAMS,
   RECEIVE_PROGRAMS,
   SHOW_GUIDE,
+  PLAY_CLIP,
   fetchServices,
   receiveChannels,
   fetchCurrentPrograms,
   requestPrograms,
-  receivePrograms
+  receivePrograms,
+  fetchStream,
 } from '../actions';
 
 import store from './../store';
 
-function programs(state = { isFetching: false, items: [], channelItems: [] }, action) {
+function programs(state = { isFetching: false, items: [], channelItems: [], isPlaying: false }, action) {
   switch (action.type) {
     case REQUEST_PROGRAMS:
       fetchCurrentPrograms(store.getState().channels.items.map(c => c.id)).then(result => {
@@ -33,7 +35,18 @@ function programs(state = { isFetching: false, items: [], channelItems: [] }, ac
       return Object.assign({}, state, {
         isFetching: false,
         items: state.items,
-        channelItems: state.items.filter((program) => {return program.service.id === action.channelId })
+        channelItems: state.items.filter(program => {
+          return program.service.id === action.channelId;
+        }),
+      });
+    case PLAY_CLIP:
+      console.log('play clip', action);
+      fetchStream(action.programId, action.mediaId).then(result => {
+        console.log(result);
+      });
+      return Object.assign({}, state, {
+        isPlaying: true,
+        streamUrl: 'foo',
       });
     default:
       return state;
